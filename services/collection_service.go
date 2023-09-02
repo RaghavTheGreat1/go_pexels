@@ -14,11 +14,11 @@ import (
 	"github.com/RaghavTheGreat1/go_pexels/models"
 )
 
-func SearchPhotos(c *models.PexelsClient, params models.PhotoParams) models.SearchPhotoResponse {
+func GetFeaturedCollections(c *models.PexelsClient, params models.CollectionParams) models.CollectionResponse {
 
 	query := utils.BuildQueryParams(params)
 
-	url := fmt.Sprintf("%s/search?%s", constants.BaseURL, query.Encode())
+	url := fmt.Sprintf("%s/featured?%s", constants.CollectionBaseURL, query.Encode())
 
 	newReq, _ := http.NewRequest("GET", url, nil)
 
@@ -35,18 +35,19 @@ func SearchPhotos(c *models.PexelsClient, params models.PhotoParams) models.Sear
 
 	defer res.Body.Close()
 
-	photosResponse := models.SearchPhotoResponse{}
+	featuredCollectionResponse := models.CollectionResponse{}
 	body, _ := io.ReadAll(res.Body)
 
-	json.Unmarshal(body, &photosResponse)
+	json.Unmarshal(body, &featuredCollectionResponse)
 
-	return photosResponse
+	return featuredCollectionResponse
 }
 
-func GetCuratedPhotos(c *models.PexelsClient, params models.PhotoParams) models.CuratedPhotosResponse {
+func GetMyCollections(c *models.PexelsClient, params models.CollectionParams) models.CollectionResponse {
+
 	query := utils.BuildQueryParams(params)
 
-	url := fmt.Sprintf("%s/curated?%s", constants.BaseURL, query.Encode())
+	url := fmt.Sprintf("%s?%s", constants.CollectionBaseURL, query.Encode())
 
 	newReq, _ := http.NewRequest("GET", url, nil)
 
@@ -63,17 +64,19 @@ func GetCuratedPhotos(c *models.PexelsClient, params models.PhotoParams) models.
 
 	defer res.Body.Close()
 
-	curatedPhotosResponse := models.CuratedPhotosResponse{}
+	myCollectionResponse := models.CollectionResponse{}
 	body, _ := io.ReadAll(res.Body)
 
-	json.Unmarshal(body, &curatedPhotosResponse)
+	json.Unmarshal(body, &myCollectionResponse)
 
-	return curatedPhotosResponse
+	return myCollectionResponse
 }
 
-func GetPhoto(c *models.PexelsClient, params models.PhotoParams) models.PhotoResponse {
+func GetCollectionMedia(c *models.PexelsClient, id string, params models.CollectionParams) models.CollectionMediaResponse {
 
-	url := fmt.Sprintf("%s/photos/%s", constants.BaseURL, params.Id)
+	query := utils.BuildQueryParams(params)
+
+	url := fmt.Sprintf("%s/%s?%s", constants.CollectionBaseURL, id, query.Encode())
 
 	newReq, _ := http.NewRequest("GET", url, nil)
 
@@ -90,10 +93,10 @@ func GetPhoto(c *models.PexelsClient, params models.PhotoParams) models.PhotoRes
 
 	defer res.Body.Close()
 
-	photoResponse := models.PhotoResponse{}
+	collectionMediaResponse := models.CollectionMediaResponse{}
 	body, _ := io.ReadAll(res.Body)
 
-	json.Unmarshal(body, &photoResponse)
+	json.Unmarshal(body, &collectionMediaResponse)
 
-	return photoResponse
+	return collectionMediaResponse
 }

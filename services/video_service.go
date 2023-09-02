@@ -73,7 +73,7 @@ func GetPopularVideos(c *models.PexelsClient, params models.VideoParams) models.
 
 func GetVideo(c *models.PexelsClient, params models.VideoParams) models.Video {
 
-	url := fmt.Sprintf("%s/videos/%s", params.Id)
+	url := fmt.Sprintf("%s/videos/%s", constants.VideoBaseURL, params.Id)
 
 	newReq, _ := http.NewRequest("GET", url, nil)
 
