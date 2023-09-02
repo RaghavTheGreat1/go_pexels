@@ -14,11 +14,11 @@ import (
 	"github.com/RaghavTheGreat1/go_pexels/models"
 )
 
-func SearchPhotos(c *models.PexelsClient, params models.PhotoParams) models.SearchPhotoResponse {
+func SearchVideos(c *models.PexelsClient, params models.VideoParams) models.SearchVideoResponse {
 
 	query := utils.BuildQueryParams(params)
 
-	url := fmt.Sprintf("%s/search?%s", constants.BaseURL, query.Encode())
+	url := fmt.Sprintf("%s/search?%s", constants.VideoBaseURL, query.Encode())
 
 	newReq, _ := http.NewRequest("GET", url, nil)
 
@@ -35,18 +35,18 @@ func SearchPhotos(c *models.PexelsClient, params models.PhotoParams) models.Sear
 
 	defer res.Body.Close()
 
-	photosResponse := models.SearchPhotoResponse{}
+	searchVideosResponse := models.SearchVideoResponse{}
 	body, _ := io.ReadAll(res.Body)
 
-	json.Unmarshal(body, &photosResponse)
+	json.Unmarshal(body, &searchVideosResponse)
 
-	return photosResponse
+	return searchVideosResponse
 }
 
-func GetCuratedPhotos(c *models.PexelsClient, params models.PhotoParams) models.CuratedPhotosResponse {
+func GetPopularVideos(c *models.PexelsClient, params models.VideoParams) models.PopularVideoResponse {
 	query := utils.BuildQueryParams(params)
 
-	url := fmt.Sprintf("%s/curated?%s", constants.BaseURL, query.Encode())
+	url := fmt.Sprintf("%s/popular?%s", constants.VideoBaseURL, query.Encode())
 
 	newReq, _ := http.NewRequest("GET", url, nil)
 
@@ -63,17 +63,17 @@ func GetCuratedPhotos(c *models.PexelsClient, params models.PhotoParams) models.
 
 	defer res.Body.Close()
 
-	curatedPhotosResponse := models.CuratedPhotosResponse{}
+	popularVideosResponse := models.PopularVideoResponse{}
 	body, _ := io.ReadAll(res.Body)
 
-	json.Unmarshal(body, &curatedPhotosResponse)
+	json.Unmarshal(body, &popularVideosResponse)
 
-	return curatedPhotosResponse
+	return popularVideosResponse
 }
 
-func GetPhoto(c *models.PexelsClient, params models.PhotoParams) models.PhotoResponse {
+func GetVideo(c *models.PexelsClient, params models.VideoParams) models.Video {
 
-	url := fmt.Sprintf("%s/photos/%s", params.Id)
+	url := fmt.Sprintf("%s/videos/%s", params.Id)
 
 	newReq, _ := http.NewRequest("GET", url, nil)
 
@@ -90,10 +90,10 @@ func GetPhoto(c *models.PexelsClient, params models.PhotoParams) models.PhotoRes
 
 	defer res.Body.Close()
 
-	photoResponse := models.PhotoResponse{}
+	videoResponse := models.Video{}
 	body, _ := io.ReadAll(res.Body)
 
-	json.Unmarshal(body, &photoResponse)
+	json.Unmarshal(body, &videoResponse)
 
-	return photoResponse
+	return videoResponse
 }

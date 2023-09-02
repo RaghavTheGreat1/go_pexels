@@ -1,6 +1,7 @@
 package models
 
 type VideoParams struct {
+	Id          string
 	Query       string
 	Orientation string
 	Size        string
