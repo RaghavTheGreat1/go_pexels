@@ -9,7 +9,6 @@ const (
 )
 
 type PhotoParams struct {
-	Id          string
 	Query       string
 	Orientation Orientation
 	Size        string

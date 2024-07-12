@@ -1,17 +1,17 @@
-package main
+package services_test
 
 import (
-	"fmt"
 	"os"
+	"testing"
 
-	"github.com/RaghavTheGreat1/go_pexels/services"
+	"github.com/joho/godotenv"
 
 	"github.com/RaghavTheGreat1/go_pexels/models"
 
-	"github.com/joho/godotenv"
+	"github.com/RaghavTheGreat1/go_pexels/services"
 )
 
-func main() {
+func TestGetPhoto(t *testing.T) {
 
 	godotenv.Load(".env")
 	apiKey := os.Getenv("API_KEY")
@@ -22,7 +22,9 @@ func main() {
 	params := models.PhotoParams{
 		Query: "Rocket",
 	}
+
 	result := services.SearchPhotos(&client, params)
 
-	fmt.Print(result)
+	t.Log(result)
+
 }

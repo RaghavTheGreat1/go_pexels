@@ -37,7 +37,7 @@ func SearchPhotos(c *models.PexelsClient, params models.PhotoParams) models.Sear
 
 	photosResponse := models.SearchPhotoResponse{}
 	body, _ := io.ReadAll(res.Body)
-
+	fmt.Println(string(body))
 	json.Unmarshal(body, &photosResponse)
 
 	return photosResponse
@@ -71,9 +71,9 @@ func GetCuratedPhotos(c *models.PexelsClient, params models.PhotoParams) models.
 	return curatedPhotosResponse
 }
 
-func GetPhoto(c *models.PexelsClient, params models.PhotoParams) models.PhotoResponse {
+func GetPhoto(c *models.PexelsClient, id string) models.PhotoResponse {
 
-	url := fmt.Sprintf("%s/photos/%s", constants.BaseURL, params.Id)
+	url := fmt.Sprintf("%s/photos/%s", constants.BaseURL, id)
 
 	newReq, _ := http.NewRequest("GET", url, nil)
 
